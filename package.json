@@ -11,10 +11,10 @@
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
     "generate": "yarn plop --plopfile generators/plopfile.js",
-    "prestorybook": "rnstl"
+    "prestorybook": "rnstl",
+    "pod": "cd ios && bundle install && bundle exec pod install"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.0",
     "axios": "^0.27.2",
     "react": "18.1.0",
     "react-native": "0.70.6",
