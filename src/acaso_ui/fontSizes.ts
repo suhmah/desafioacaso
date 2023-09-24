@@ -1,5 +1,9 @@
+import Metrics from './helpers/metrics';
+
 const fontSizes = {
-  title: 32,
+  title: Metrics(32),
+  body_1: Metrics(16),
+  error: Metrics(12),
 };
 
 export default fontSizes;

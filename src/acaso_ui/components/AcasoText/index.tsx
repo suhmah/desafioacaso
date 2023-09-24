@@ -13,15 +13,15 @@ interface IAcasoTextProps extends TextProps {
 }
 
 const composeStyle = (props: IAcasoTextProps): TextStyle => {
-  const variantStyle = variants[props.variant];
+  const variantStyle = variants[props.variant || 'headtile-1'];
 
   return {
     ...variantStyle,
-    color: props.color,
-    fontSize: props.size || variantStyle.fontSize,
-    lineHeight: props.lineHeight || variantStyle.lineHeight,
-    textAlign: props.center ? 'center' : 'left',
-    textTransform: props.uppercase ? 'uppercase' : 'none',
+    color: props?.color || variantStyle.color,
+    fontSize: props?.size || variantStyle?.fontSize,
+    lineHeight: props?.lineHeight || variantStyle?.lineHeight,
+    textAlign: props?.center ? 'center' : 'left',
+    textTransform: props?.uppercase ? 'uppercase' : 'none',
   };
 };
 

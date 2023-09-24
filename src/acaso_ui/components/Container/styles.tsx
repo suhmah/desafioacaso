@@ -1,19 +1,23 @@
 import styled from 'styled-components/native';
-// don't import into acas_ui because both are exported in chance_ui resulting in errors for circly
 import baseColors from '@/acaso_ui/colors';
+import Metrics from '@/acaso_ui/helpers/metrics';
 import BaseIcon from '../BaseIcon';
 
 export const Main = styled.SafeAreaView`
   flex: 1;
 
-  align-items: center;
-
   background-color: ${baseColors.primary.main};
 `;
 
-export const Image = styled(BaseIcon)`
-  width: 130px;
-  height: 25px;
+export const Wrapper = styled.ScrollView.attrs({
+  contentContainerStyle: { alignItems: 'center' },
+})`
+  width: 100%;
+`;
 
-  margin-top: 20px;
+export const Image = styled(BaseIcon)`
+  width: ${Metrics(130)}px;
+  height: ${Metrics(25)}px;
+
+  margin-top: ${Metrics(20)}px;
 `;
