@@ -5,7 +5,7 @@ import AcasoText from '../AcasoText';
 interface IProps {
   label: string;
   state: boolean;
-  styleText: StyleProp<TextStyle> | undefined;
+  styleText?: StyleProp<TextStyle> | undefined;
 }
 
 const ErrorText = ({ label, state, styleText }: IProps) => {

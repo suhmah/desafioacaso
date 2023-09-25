@@ -1,5 +1,6 @@
 import React from 'react';
 import baseColors from '@/acaso_ui/colors';
+import { ActivityIndicator } from 'react-native';
 import { Wrapper, WrapperDefault } from './styles';
 import AcasoText from '../AcasoText';
 
@@ -11,6 +12,7 @@ interface IButton extends IVariant {
   labelColor?: string;
   label: string;
   isDefault?: boolean;
+  loading?: boolean;
   onPress?: () => void;
 }
 const getColor = ({ variant }: IVariant) => {
@@ -39,6 +41,7 @@ const Button = ({
   isDefault,
   variant,
   onPress,
+  loading,
 }: IButton) => {
   if (isDefault) {
     return (
@@ -48,12 +51,23 @@ const Button = ({
     );
   }
   return (
-    <Wrapper onPress={onPress} background={getColor({ variant }).background}>
-      <AcasoText
-        variant="body-2"
-        value={label}
-        color={labelColor || getColor({ variant }).color}
-      />
+    <Wrapper
+      disabled={loading}
+      onPress={onPress}
+      background={getColor({ variant }).background}
+    >
+      {loading ? (
+        <ActivityIndicator
+          size="small"
+          color={labelColor || getColor({ variant }).color}
+        />
+      ) : (
+        <AcasoText
+          variant="body-2"
+          value={label}
+          color={labelColor || getColor({ variant }).color}
+        />
+      )}
     </Wrapper>
   );
 };

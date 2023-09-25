@@ -1,17 +1,19 @@
-import React from 'react';
-import { Button, Container, TextInput } from '@/acaso_ui';
+import React, { useEffect } from 'react';
+import { Button, Container, ErrorText, TextInput } from '@/acaso_ui';
 import ConfirmPasswordTemplate from '@/modules/signUp/Shared/presentation/components/ConfirmPasswordTemplate';
 import Margin from '@/acaso_ui/components/Margin';
 import { useFormik } from 'formik';
+import { useSignUp } from '@/modules/signUp/domain/useCases/useCaseSignUp';
 import { Wrapper } from './styles';
 import { signuPSchema } from './helpers/scshemaValidators';
-import { useSignINavigator } from '../../routes';
 import { RouteNameSignUp } from '../../routes/RouteName';
+import { useSignINavigator } from '../../routes';
 
 const Home = () => {
+  const { request, isLoading, isError, isSuccess } = useSignUp();
   const { navigate } = useSignINavigator();
 
-  const { handleChange, handleSubmit, errors } = useFormik({
+  const { handleChange, handleSubmit, errors, values } = useFormik({
     initialValues: {
       email: '',
       firstName: '',
@@ -19,11 +21,22 @@ const Home = () => {
       password: '',
       confirmPassword: '',
     },
-    onSubmit: () => {
-      navigate(RouteNameSignUp.CONFIRM_EMAIL);
+    onSubmit: (value) => {
+      request({
+        email: value.email,
+        firstName: value.firstName,
+        lastedName: value.lastedName,
+        password: value.password,
+      });
     },
     validationSchema: signuPSchema,
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(RouteNameSignUp.CONFIRM_EMAIL, { email: values.email });
+    }
+  }, [isSuccess, navigate, values]);
 
   return (
     <Container title="Cadastro">
@@ -85,7 +98,17 @@ const Home = () => {
 
         <Margin />
 
-        <Button label="Criar conta em aca.so" onPress={handleSubmit} />
+        <Button
+          label="Criar conta em aca.so"
+          onPress={handleSubmit}
+          loading={isLoading}
+        />
+
+        <ErrorText
+          label={isError?.error?.message || ''}
+          state={!!isError?.status}
+          styleText={{ marginTop: 5 }}
+        />
 
         <Margin />
 
